@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			
+    <meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />    
+		<title>GoTeamDHS</title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/teamsubmit.css" />
+		<link href='http://fonts.googleapis.com/css?family=PT+Sans|Roboto+Slab:700,400|Merriweather+Sans:400,800' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<article>
+			<header>
+				<img src="images/music.png" alt="Go" height="70px">
+				<img src="images/dhslogo.png" alt="Team" height="70px">
+				<img src="images/balls.jpg" alt="DHS	 " height="70px"><br><br>
+				<h1>GoTeamDHS</h1>
+
+				<br>
+				<div align="right">
+			    <a id="login" href="{{ url|safe }}">{{ url_linktext }}</a>
+				</div>
+				<form method="post" id="contact-form" action="/eventsearch">
+						<input type="text" name="search_value" placeholder="Search an Event" required/>
+						<div>
+						<input type="submit" value="Search" />
+					</div>
+				</form>
+				
+			</header>
+			<br/>
+			<br/>
+			<section id="column1">
+				
+	{% autoescape true %}
+    {% for location in locations %}
+    
+      {% if location.person %}
+        <b>{{ location.person.email }}
+          {% if user and user.user_id() == location.person.identity %}
+            (You)
+          {% endif %}
+        </b> wrote:
+      {% else %}
+       An anonymous person wrote:
+      {% endif %}
+      <blockquote>{{ greeting.content }}</blockquote>
+    {% endfor %}
+
+    <form action="/teamsubmitpage?goteamdhs_name={{ goteamdhs_name }}" method="post" enctype="multipart/form-data" id="contact-form">
+					<header id="content-header">
+						<h3>Submit a list of students</h3>
+					</header>
+					<div>
+						<label>CCA/Group*</label>
+						<input type="text" name="nnplace" placeholder="e.g. Badminton Team" required/>
+					</div>
+					<div>
+						<label>Division/Year*</label>
+						<input type="text" name="nfcontent" placeholder="e.g. B Division/2015" required/>
+					</div>
+					<div>
+						<label>Names*</label>
+						<input type="text" name="nfdescription" placeholder="e.g. Jiajia, Bob" required/>
+
+					</div>
+					<div>
+						<label>Team photo:</label>
+          				<input type="file" name="nfimage" />
+          			</div>
+					<div>
+						<em>* Required</em>
+						<input type="submit" value="Submit" />
+					</div>
+					<div class="clearfix"></div>
+					<div class="content-footer">
+						<p>Login is required</p>
+					</div>
+    </form>
+
+    <hr>
+
+{% endautoescape %}
+
+				<br/><br/>
+				<a id="back" href="/">Back to home page</a>
+			</section>
+		</article>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59562971-2', 'auto');
+  ga('send', 'pageview');
+
+		</script>
+	</body>
+</html>
